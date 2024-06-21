@@ -26,7 +26,7 @@ onMounted(() => {
         <th>Geregistreerde naam</th>
       </tr>
       <tr v-for="vendor in vendors">
-        <td><RouterLink :to="'/leveranciers/' + vendor.id">{{ vendor.trade_name }}</RouterLink></td>
+        <td><RouterLink :to="{ name: 'vendor', params: { id: vendor.id } }">{{ vendor.trade_name }}</RouterLink></td>
         <td>{{ vendor.kvk_number }}</td>
         <td>{{ vendor.statutory_name }}</td>
       </tr>
