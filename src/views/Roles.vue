@@ -26,7 +26,7 @@ onMounted(() => {
         <th>Beschrijving</th>
       </tr>
       <tr v-for="role in roles">
-        <td><RouterLink :to="'/rollen/' + role.id">{{ role.name }}</RouterLink></td>
+        <td><RouterLink :to="{ name: 'role', params: { id: role.id } }">{{ role.name }}</RouterLink></td>
         <td>{{ role.description }}</td>
       </tr>
     </table>

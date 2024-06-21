@@ -26,7 +26,7 @@ onMounted(() => {
         <th>Beschrijving</th>
       </tr>
       <tr v-for="systemType in systemTypes">
-        <td><RouterLink :to="'/systeem-types/' + systemType.id">{{ systemType.name }}</RouterLink></td>
+        <td><RouterLink :to="{ name: 'application', params: { id: systemType.id } }">{{ systemType.name }}</RouterLink></td>
         <td>{{ systemType.description }}</td>
       </tr>
     </table>

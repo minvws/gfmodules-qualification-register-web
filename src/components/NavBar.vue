@@ -4,11 +4,11 @@ import {RouterLink} from "vue-router";
 
 <template>
   <div class="topnav">
-    <RouterLink to="/applicaties">Applicaties</RouterLink>
-    <RouterLink to="/leveranciers">Leveranciers</RouterLink>
-    <RouterLink to="/systeem-types">Systeem types</RouterLink>
-    <RouterLink to="/rollen">Rollen</RouterLink>
-    <RouterLink to="/about">about</RouterLink>
+    <RouterLink :to="{ name: 'applications' }">Applicaties</RouterLink>
+    <RouterLink :to="{ name: 'vendors' }">Leveranciers</RouterLink>
+    <RouterLink :to="{ name: 'system-types' }">Systeem types</RouterLink>
+    <RouterLink :to="{ name: 'roles' }">Rollen</RouterLink>
+    <RouterLink :to="{ name: 'about' }">about</RouterLink>
   </div>
 </template>
 

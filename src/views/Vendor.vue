@@ -38,7 +38,7 @@ onMounted(() => {
         <dd>
           <ul>
             <li v-for="app in vendor?.applications">
-              <RouterLink :to="'/applicaties/' + app.id">{{ app.name }}</RouterLink>
+              <RouterLink :to="{ name: 'application', params: { id: app.id } }">{{ app.name }}</RouterLink>
             </li>
           </ul>
         </dd>

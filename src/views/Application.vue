@@ -33,14 +33,14 @@ onMounted(() => {
 
       <div>
         <dt>Leverancier</dt>
-        <dd><RouterLink :to="'/leveranciers/' + application?.vendor_id">{{ application?.vendor_trade_name }}</RouterLink></dd>
+        <dd><RouterLink :to="{ name: 'vendor', params: { id: application?.vendor_id } }">{{ application?.vendor_trade_name }}</RouterLink></dd>
       </div>
       <div>
         <dt>Rollen</dt>
         <dd>
           <ul>
             <li v-for="role in application?.roles">
-              <RouterLink :to="'/rollen/' + role?.id">{{ role.name }}</RouterLink>
+              <RouterLink :to="{ name: 'role', params: { id: role?.id } }">{{ role.name }}</RouterLink>
             </li>
           </ul>
         </dd>
@@ -50,7 +50,7 @@ onMounted(() => {
         <dd>
           <ul>
             <li v-for="type in application?.system_types">
-              <RouterLink :to="'/systeem-types/' + type?.id">{{ type.name }}</RouterLink>
+              <RouterLink :to="{ name: 'system-type', params: { id: type?.id } }">{{ type.name }}</RouterLink>
             </li>
           </ul>
         </dd>

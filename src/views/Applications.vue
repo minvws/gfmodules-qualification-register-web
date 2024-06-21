@@ -27,8 +27,8 @@ onMounted(() => {
         <th></th>
       </tr>
       <tr v-for="application in applications">
-        <td><RouterLink :to="'/applicaties/' + application.id">{{ application.name }}</RouterLink></td>
-        <td><RouterLink :to="'/leveranciers/' + application.vendor_id">{{ application.vendor_trade_name }}</RouterLink></td>
+        <td><RouterLink :to="{ name: 'application', params: { id: application.id } }">{{ application.name }}</RouterLink></td>
+        <td><RouterLink :to="{ name: 'vendor', params: { id: application.vendor_id } }">{{ application.vendor_trade_name }}</RouterLink></td>
         <td>{{application.system_types.map(s => s.name).toString()}}</td>
         <td>{{application.roles.map(r => r.name).toString()}}</td>
       </tr>
