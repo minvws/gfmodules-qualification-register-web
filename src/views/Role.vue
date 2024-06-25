@@ -9,7 +9,7 @@ const route = useRoute()
 const role = ref<ApplicationRole|null>(null)
 
 onMounted(() => {
-  fetch('http://localhost:8506/administration/roles/' + route.params.id)
+  fetch('http://localhost:8507/roles/' + route.params.id)
       .then(response => response.json())
       .then(data => {
         role.value = data

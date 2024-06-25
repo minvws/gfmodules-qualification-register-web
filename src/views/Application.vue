@@ -7,7 +7,7 @@ const route = useRoute()
 const application = ref<Application|null>(null)
 
 onMounted(() => {
-  fetch('http://localhost:8506/administration/applications/' + route.params.id)
+  fetch('http://localhost:8507/applications/' + route.params.id)
       .then(response => response.json())
       .then(data => {
         application.value = data
@@ -33,7 +33,7 @@ onMounted(() => {
 
       <div>
         <dt>Leverancier</dt>
-        <dd><RouterLink :to="{ name: 'vendor', params: { id: application?.vendor_id } }">{{ application?.vendor_trade_name }}</RouterLink></dd>
+        <dd><RouterLink :to="{ name: 'vendor', params: { id: application?.vendor.id } }">{{ application?.vendor.trade_name }}</RouterLink></dd>
       </div>
       <div>
         <dt>Rollen</dt>

@@ -7,7 +7,7 @@ import type {Vendor} from "@/models/vendor";
 const vendors = ref<Array<Vendor>>([])
 
 onMounted(() => {
-  fetch('http://localhost:8506/administration/vendors')
+  fetch('http://localhost:8507/vendors')
     .then(response => response.json())
     .then(data => {
       vendors.value = data
