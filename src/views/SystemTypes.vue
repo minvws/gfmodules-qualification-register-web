@@ -8,7 +8,7 @@ import type {ApplicationSystemType} from "@/models/systemType";
 const systemTypes = ref<Array<ApplicationSystemType>>([])
 
 onMounted(() => {
-  fetch('http://localhost:8506/administration/system_types')
+  fetch('http://localhost:8507/system_types')
     .then(response => response.json())
     .then(data => {
       systemTypes.value = data
@@ -26,7 +26,7 @@ onMounted(() => {
         <th>Beschrijving</th>
       </tr>
       <tr v-for="systemType in systemTypes">
-        <td><RouterLink :to="{ name: 'application', params: { id: systemType.id } }">{{ systemType.name }}</RouterLink></td>
+        <td><RouterLink :to="{ name: 'system-type', params: { id: systemType.id } }">{{ systemType.name }}</RouterLink></td>
         <td>{{ systemType.description }}</td>
       </tr>
     </table>

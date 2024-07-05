@@ -8,7 +8,7 @@ import type {ApplicationRole} from "@/models/role";
 const roles = ref<Array<ApplicationRole>>([])
 
 onMounted(() => {
-  fetch('http://localhost:8506/administration/roles')
+  fetch('http://localhost:8507/roles')
     .then(response => response.json())
     .then(data => {
       roles.value = data

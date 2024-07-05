@@ -9,7 +9,7 @@ const route = useRoute()
 const systemType = ref<ApplicationSystemType|null>(null)
 
 onMounted(() => {
-  fetch('http://localhost:8506/administration/system_types/' + route.params.id)
+  fetch('http://localhost:8507/system_types/' + route.params.id)
       .then(response => response.json())
       .then(data => {
         systemType.value = data

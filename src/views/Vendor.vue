@@ -8,7 +8,7 @@ const route = useRoute()
 const vendor = ref<Vendor|null>(null)
 
 onMounted(() => {
-  fetch('http://localhost:8506/administration/vendors/' + route.params.id)
+  fetch('http://localhost:8507/vendors/' + route.params.id)
       .then(response => response.json())
       .then(data => {
         vendor.value = data
