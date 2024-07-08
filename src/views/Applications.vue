@@ -2,11 +2,12 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
 import type {Application} from "@/models/application";
+import {useApiApplicationsUrl} from "@/composables/useApiEndpoint";
 
 const applications = ref<Array<Application>>([])
 
 onMounted(() => {
-  fetch('http://localhost:8507/applications')
+  fetch(useApiApplicationsUrl())
     .then(response => response.json())
     .then(data => {
       applications.value = data

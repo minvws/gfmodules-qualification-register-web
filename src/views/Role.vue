@@ -4,12 +4,13 @@ import {RouterLink, useRoute} from "vue-router";
 import type {Application} from "@/models/application";
 import type {Vendor} from "@/models/vendor";
 import type {ApplicationRole} from "@/models/role";
+import {useApiRoleUrl} from "@/composables/useApiEndpoint";
 
 const route = useRoute()
 const role = ref<ApplicationRole|null>(null)
 
 onMounted(() => {
-  fetch('http://localhost:8507/roles/' + route.params.id)
+  fetch(useApiRoleUrl(route.params.id as string))
       .then(response => response.json())
       .then(data => {
         role.value = data

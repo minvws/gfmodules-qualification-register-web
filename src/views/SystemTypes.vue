@@ -4,11 +4,12 @@ import {RouterLink} from "vue-router";
 import type {Application} from "@/models/application";
 import type {Vendor} from "@/models/vendor";
 import type {ApplicationSystemType} from "@/models/systemType";
+import {useApiSystemTypesUrl} from "@/composables/useApiEndpoint";
 
 const systemTypes = ref<Array<ApplicationSystemType>>([])
 
 onMounted(() => {
-  fetch('http://localhost:8507/system_types')
+  fetch(useApiSystemTypesUrl())
     .then(response => response.json())
     .then(data => {
       systemTypes.value = data

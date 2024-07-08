@@ -3,12 +3,13 @@ import {onMounted, ref} from 'vue'
 import {RouterLink, useRoute} from "vue-router";
 import type {Application} from "@/models/application";
 import type {Vendor} from "@/models/vendor";
+import {useApiVendorUrl} from "@/composables/useApiEndpoint";
 
 const route = useRoute()
 const vendor = ref<Vendor|null>(null)
 
 onMounted(() => {
-  fetch('http://localhost:8507/vendors/' + route.params.id)
+  fetch(useApiVendorUrl(route.params.id as string))
       .then(response => response.json())
       .then(data => {
         vendor.value = data

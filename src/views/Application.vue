@@ -2,12 +2,13 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink, useRoute} from 'vue-router'
 import type {Application} from "@/models/application";
+import {useApiApplicationUrl} from "@/composables/useApiEndpoint";
 
 const route = useRoute()
 const application = ref<Application|null>(null)
 
 onMounted(() => {
-  fetch('http://localhost:8507/applications/' + route.params.id)
+  fetch(useApiApplicationUrl(route.params.id as string))
       .then(response => response.json())
       .then(data => {
         application.value = data

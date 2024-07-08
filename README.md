@@ -16,6 +16,13 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
+Copy `.env.autopilot` to `.env`.
+
+```sh
+cp .env.autopilot .env
+```
+
+And install dependencies.
 ```sh
 npm install
 ```

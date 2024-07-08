@@ -4,11 +4,12 @@ import {RouterLink} from "vue-router";
 import type {Application} from "@/models/application";
 import type {Vendor} from "@/models/vendor";
 import type {Qualification} from "@/models/qualification";
+import {useApiQualificationsUrl} from "@/composables/useApiEndpoint";
 
 const qualifications = ref<Array<Qualification>>([])
 
 onMounted(() => {
-  fetch('http://localhost:8507/qualifications')
+  fetch(useApiQualificationsUrl())
     .then(response => response.json())
     .then(data => {
       qualifications.value = data
