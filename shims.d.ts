@@ -3,7 +3,7 @@ export {}
 declare global {
   interface Window {
     config?: {
-      apiEndpoint?: string
+      api?: string
     }
   }
 }

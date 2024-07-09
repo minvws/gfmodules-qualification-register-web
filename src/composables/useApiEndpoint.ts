@@ -1,6 +1,6 @@
 function getApiEndpoint() {
-    if (window?.config?.apiEndpoint) {
-        return window.config.apiEndpoint
+    if (window?.config?.api) {
+        return window.config.api
     }
     return import.meta.env.VITE_API_ENDPOINT
 }
