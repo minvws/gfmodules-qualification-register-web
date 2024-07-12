@@ -30,7 +30,7 @@ export const useApiRoleUrl = (id?: string) => {
 }
 
 export const useApiSystemTypesUrl = () => {
-    return `${apiEndpoint}/system_types`
+    return `${apiEndpoint}/system-types`
 }
 
 export const useApiSystemTypeUrl = (id?: string) => {

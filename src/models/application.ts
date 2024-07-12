@@ -9,5 +9,5 @@ export type Application = {
     vendor: VendorSummary
     versions: ApplicationVersion[]
     roles: ApplicationRole[]
-    system_types: ApplicationSystemType[]
+    systemTypes: ApplicationSystemType[]
 }

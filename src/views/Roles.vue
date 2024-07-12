@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
-import type {Application} from "@/models/application";
-import type {Vendor} from "@/models/vendor";
 import type {ApplicationRole} from "@/models/role";
 import {useApiRolesUrl} from "@/composables/useApiEndpoint";
 

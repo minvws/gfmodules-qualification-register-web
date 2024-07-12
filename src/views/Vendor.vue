@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue'
 import {RouterLink, useRoute} from "vue-router";
-import type {Application} from "@/models/application";
 import type {Vendor} from "@/models/vendor";
 import {useApiVendorUrl} from "@/composables/useApiEndpoint";
 
@@ -19,7 +18,7 @@ onMounted(() => {
 
 <template>
   <div class="content">
-    <h1>Leverancier: {{vendor?.trade_name}}</h1>
+    <h1>Leverancier: {{vendor?.tradeName}}</h1>
     <br>
     <dl>
       <div>
@@ -28,11 +27,11 @@ onMounted(() => {
       </div>
       <div>
         <dt>Handelsnaam</dt>
-        <dd>{{ vendor?.trade_name }}</dd>
+        <dd>{{ vendor?.tradeName }}</dd>
       </div>
       <div>
         <dt>Geregistreerde naam</dt>
-        <dd>{{ vendor?.statutory_name }}</dd>
+        <dd>{{ vendor?.statutoryName }}</dd>
       </div>
       <div>
         <dt>Applicaties</dt>
