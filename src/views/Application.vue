@@ -34,7 +34,7 @@ onMounted(() => {
 
       <div>
         <dt>Leverancier</dt>
-        <dd><RouterLink :to="{ name: 'vendor', params: { id: application?.vendor.id } }">{{ application?.vendor.trade_name }}</RouterLink></dd>
+        <dd><RouterLink :to="{ name: 'vendor', params: { id: application?.vendor.id } }">{{ application?.vendor.tradeName }}</RouterLink></dd>
       </div>
       <div>
         <dt>Rollen</dt>
@@ -50,7 +50,7 @@ onMounted(() => {
         <dt>Systeem types</dt>
         <dd>
           <ul>
-            <li v-for="type in application?.system_types">
+            <li v-for="type in application?.systemTypes">
               <RouterLink :to="{ name: 'system-type', params: { id: type?.id } }">{{ type.name }}</RouterLink>
             </li>
           </ul>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
-import type {Application} from "@/models/application";
 import type {Vendor} from "@/models/vendor";
 import {useApiVendorsUrl} from "@/composables/useApiEndpoint";
 
@@ -27,9 +26,9 @@ onMounted(() => {
         <th>Geregistreerde naam</th>
       </tr>
       <tr v-for="vendor in vendors">
-        <td><RouterLink :to="{ name: 'vendor', params: { id: vendor.id } }">{{ vendor.trade_name }}</RouterLink></td>
-        <td>{{ vendor.kvk_number }}</td>
-        <td>{{ vendor.statutory_name }}</td>
+        <td><RouterLink :to="{ name: 'vendor', params: { id: vendor.id } }">{{ vendor.tradeName }}</RouterLink></td>
+        <td>{{ vendor.kvkNumber }}</td>
+        <td>{{ vendor.statutoryName }}</td>
       </tr>
     </table>
   </div>

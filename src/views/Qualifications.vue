@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
-import type {Application} from "@/models/application";
-import type {Vendor} from "@/models/vendor";
 import type {Qualification} from "@/models/qualification";
 import {useApiQualificationsUrl} from "@/composables/useApiEndpoint";
 
@@ -33,14 +31,14 @@ onMounted(() => {
         <th>protocol versie</th>
       </tr>
       <tr v-for="qualification in qualifications">
-        <td>{{ qualification.healthcare_provider_name }}</td>
-        <td><RouterLink :to="{ name: 'application', params: { id: qualification.application_id } }">{{ qualification.application_name }}</RouterLink></td>
-        <td>{{ qualification.application_version }}</td>
-        <td>{{ qualification.system_type }}</td>
+        <td>{{ qualification.healthcareProviderName }}</td>
+        <td><RouterLink :to="{ name: 'application', params: { id: qualification.applicationId } }">{{ qualification.applicationName }}</RouterLink></td>
+        <td>{{ qualification.applicationVersion }}</td>
+        <td>{{ qualification.systemType }}</td>
         <td>{{ qualification.role }}</td>
-        <td>{{ qualification.qualification_date }}</td>
-        <td>{{ qualification.protocol_name }}</td>
-        <td>{{ qualification.protocol_version }}</td>
+        <td>{{ qualification.qualificationDate }}</td>
+        <td>{{ qualification.protocolName }}</td>
+        <td>{{ qualification.protocolVersion }}</td>
       </tr>
     </table>
   </div>
