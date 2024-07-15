@@ -1,10 +1,11 @@
-name: npm
+name: CI
 
 on:
+  workflow_dispatch:
+  pull_request:
   push:
     branches:
       - main
-  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,6 +13,7 @@ concurrency:
 
 jobs:
   type-check:
+    name: Check types
     runs-on: ubuntu-22.04
 
     steps:
@@ -30,7 +32,8 @@ jobs:
       - name: Run TypeScript Type Check
         run: npm run type-check
 
-  build-project:
+  build:
+    name: Build
     runs-on: ubuntu-22.04
 
     steps:
@@ -48,3 +51,17 @@ jobs:
 
       - name: Build portal
         run: npm run build-only
+
+  sonar:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+            
+        - name: Run SonarCloud scanner
+          uses: minvws/nl-irealisatie-generic-pipelines/.github/actions/sonarcloud@main
+          with:
+            sonar-token: ${{ secrets.SONAR_TOKEN }}
