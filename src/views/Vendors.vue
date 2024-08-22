@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
 import type {Vendor} from "@/models/vendor";
+import  type {Page} from "@/models/page";
 import {useApiVendorsUrl} from "@/composables/useApiEndpoint";
 
 const vendors = ref<Array<Vendor>>([])
@@ -9,8 +10,8 @@ const vendors = ref<Array<Vendor>>([])
 onMounted(() => {
   fetch(useApiVendorsUrl())
     .then(response => response.json())
-    .then(data => {
-      vendors.value = data
+    .then((data: Page<Vendor>) => {
+      vendors.value = data.items
     })
 })
 </script>

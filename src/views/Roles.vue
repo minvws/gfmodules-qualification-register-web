@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
 import type {ApplicationRole} from "@/models/role";
+import  type {Page} from "@/models/page";
 import {useApiRolesUrl} from "@/composables/useApiEndpoint";
 
 const roles = ref<Array<ApplicationRole>>([])
@@ -9,8 +10,8 @@ const roles = ref<Array<ApplicationRole>>([])
 onMounted(() => {
   fetch(useApiRolesUrl())
     .then(response => response.json())
-    .then(data => {
-      roles.value = data
+    .then((data: Page<ApplicationRole>) => {
+      roles.value = data.items
     })
 })
 </script>

@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
 import type {Qualification} from "@/models/qualification";
+import type {Page} from "@/models/page"
 import {useApiQualificationsUrl} from "@/composables/useApiEndpoint";
 
 const qualifications = ref<Array<Qualification>>([])
@@ -9,8 +10,8 @@ const qualifications = ref<Array<Qualification>>([])
 onMounted(() => {
   fetch(useApiQualificationsUrl())
     .then(response => response.json())
-    .then(data => {
-      qualifications.value = data
+    .then((data: Page<Qualification>) => {
+      qualifications.value = data.items
     })
 })
 </script>
