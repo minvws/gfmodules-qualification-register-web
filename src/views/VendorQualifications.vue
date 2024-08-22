@@ -18,11 +18,11 @@ onMounted(() => {
 
 <template>
     <div class="content">
-      <h1>Kwalificaties</h1>
+      <h1>Leveranciers Kwalificaties</h1>
       <br>
       <table>
         <tr>
-          <th>Zorgaanbieder</th>
+          <th>Leverancier</th>
           <th>Applicatie</th>
           <th>Applicatie versie</th>
           <th>Systeem type</th>

@@ -18,7 +18,7 @@ onMounted(() => {
 
 <template>
     <div class="content">
-      <h1>Kwalificaties</h1>
+      <h1>Zorgaanbieder Kwalificaties</h1>
       <br>
       <table>
         <tr>
