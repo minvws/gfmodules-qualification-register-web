@@ -11,6 +11,10 @@ export const useApiQualificationsUrl = () => {
     return `${apiEndpoint}/qualifications`
 }
 
+export const useApiVendorQualificationsUrl = () => {
+    return `${apiEndpoint}/qualifications/vendors`
+}
+
 export const useApiApplicationsUrl = () => {
     return `${apiEndpoint}/applications`
 }
