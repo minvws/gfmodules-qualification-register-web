@@ -30,7 +30,7 @@ onMounted(() => {
           <th>Kwalificatie datum</th>
         </tr>
         <tr v-for="qualification in healthcareProviderQualifications">
-          <td>{{ qualification.providerName }}</td>
+          <td><RouterLink :to="{ name: 'healthcare-provider', params: {id : qualification.providerId} }">{{ qualification.providerName }}</RouterLink></td>
           <td>{{ qualification.protocol }}</td>
           <td>{{ qualification.protocolVersion }}</td>
           <td>{{ qualification.applicationName }}</td>

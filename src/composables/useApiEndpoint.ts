@@ -55,3 +55,12 @@ export const useApiVendorUrl = (id?: string) => {
     const vendorUrl = useApiVendorsUrl()
     return `${vendorUrl}/${id}`
 }
+
+export const useHealthcareProvidersUrl = () => {
+        return `${apiEndpoint}/healthcare-providers`
+}
+
+export const useHealthcareProvider = (id?: string) => {
+    const healthcareProvidersUrl = useHealthcareProvidersUrl()
+    return `${healthcareProvidersUrl}/${id}`
+}

@@ -36,6 +36,11 @@ const router = createRouter({
       component: () => import('../views/Vendor.vue')
     },
     {
+      path: '/zorgaanbieders/:id',
+      name: 'healthcare-provider',
+      component: () => import('../views/HealthcareProvider.vue')
+    },
+    {
       path: '/systeem-types',
       name: 'system-types',
       component: () => import('../views/SystemTypes.vue')
