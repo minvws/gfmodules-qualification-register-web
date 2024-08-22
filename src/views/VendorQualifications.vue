@@ -22,7 +22,6 @@ onMounted(() => {
       <br>
       <table>
         <tr>
-          <th>Zorgaanbieder ID</th>
           <th>Zorgaanbieder</th>
           <th>Applicatie</th>
           <th>Applicatie versie</th>

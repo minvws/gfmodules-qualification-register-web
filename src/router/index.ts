@@ -64,6 +64,11 @@ const router = createRouter({
       path: '/leveranciers-kwalificaties',
       name: 'vendor-qualifications',
       component: () => import('../views/VendorQualifications.vue')
+    },
+    {
+      path: '/Zorgaanbieder-kwalificaties',
+      name: 'healthcare-provider-qualifications',
+      component: () => import('../views/HealthcareProviderQualifications.vue')
     }
   ]
 })
