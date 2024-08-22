@@ -32,8 +32,7 @@ onMounted(() => {
           <th>protocol versie</th>
         </tr>
         <tr v-for="qualification in vendorQualifications">
-            <td>{{ qualification.vendorId }}</td>
-            <td>{{ qualification.vendorName }}</td>
+            <td><RouterLink :to="{ name: 'vendor', params: { id: qualification.vendorId } }">{{ qualification.vendorName }}</RouterLink></td>
             <td>{{ qualification.applicationName }}</td>
             <td>{{ qualification.version }}</td>
             <td>{{ qualification.systemType }}</td>
