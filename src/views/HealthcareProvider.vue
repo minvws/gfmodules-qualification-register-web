@@ -18,7 +18,7 @@ onMounted(() => {
 
 <template>
     <div class="content">
-      <h1>Zorgaanbieder: {{ healthcareProvider?.agbCode }}</h1>
+      <h1>Zorgaanbieder: {{ healthcareProvider?.tradeName }}</h1>
       <br>
       <dl>
         <div>
@@ -27,7 +27,7 @@ onMounted(() => {
         </div>
   
         <div>
-          <dt>AHandelsnaam</dt>
+          <dt>Handelsnaam</dt>
           <dd>{{ healthcareProvider?.tradeName }}</dd>
         </div>
   
@@ -40,7 +40,7 @@ onMounted(() => {
           <dd>{{ healthcareProvider?.uraCode }}</dd>
         </div>
         <div>
-          <dt>AGB Code</dt>
+          <dt>AGB-code</dt>
           <dd>{{ healthcareProvider?.agbCode }}</dd>
         </div>
       </dl>
