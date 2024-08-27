@@ -61,11 +61,6 @@ const router = createRouter({
       component: () => import('../views/Role.vue')
     },
     {
-      path: '/kwalificaties',
-      name: 'qualifications',
-      component: () => import('../views/Qualifications.vue')
-    },
-    {
       path: '/leveranciers-kwalificaties',
       name: 'vendor-qualifications',
       component: () => import('../views/VendorQualifications.vue')

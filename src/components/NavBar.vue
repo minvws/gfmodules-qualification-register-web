@@ -4,7 +4,6 @@ import {RouterLink} from "vue-router";
 
 <template>
   <div class="topnav">
-    <RouterLink :to="{ name: 'qualifications' }">Kwalificaties</RouterLink>
     <RouterLink :to="{ name: 'vendor-qualifications' }">Leveranciers Kwalificaties</RouterLink>
     <RouterLink :to="{ name: 'healthcare-provider-qualifications' }">Zorgaanbieder Kwalificaties</RouterLink>
     <RouterLink :to="{ name: 'applications' }">Applicaties</RouterLink>
