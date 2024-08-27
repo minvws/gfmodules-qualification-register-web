@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
 import type {ApplicationSystemType} from "@/models/systemType";
+import  type {Page} from "@/models/page";
 import {useApiSystemTypesUrl} from "@/composables/useApiEndpoint";
 
 const systemTypes = ref<Array<ApplicationSystemType>>([])
@@ -9,8 +10,8 @@ const systemTypes = ref<Array<ApplicationSystemType>>([])
 onMounted(() => {
   fetch(useApiSystemTypesUrl())
     .then(response => response.json())
-    .then(data => {
-      systemTypes.value = data
+    .then((data: Page<ApplicationSystemType>) => {
+      systemTypes.value = data.items
     })
 })
 </script>

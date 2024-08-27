@@ -36,6 +36,11 @@ const router = createRouter({
       component: () => import('../views/Vendor.vue')
     },
     {
+      path: '/zorgaanbieders/:id',
+      name: 'healthcare-provider',
+      component: () => import('../views/HealthcareProvider.vue')
+    },
+    {
       path: '/systeem-types',
       name: 'system-types',
       component: () => import('../views/SystemTypes.vue')
@@ -56,10 +61,15 @@ const router = createRouter({
       component: () => import('../views/Role.vue')
     },
     {
-      path: '/kwalificaties',
-      name: 'qualifications',
-      component: () => import('../views/Qualifications.vue')
+      path: '/leveranciers-kwalificaties',
+      name: 'vendor-qualifications',
+      component: () => import('../views/VendorQualifications.vue')
     },
+    {
+      path: '/zorgaanbieder-kwalificaties',
+      name: 'healthcare-provider-qualifications',
+      component: () => import('../views/HealthcareProviderQualifications.vue')
+    }
   ]
 })
 

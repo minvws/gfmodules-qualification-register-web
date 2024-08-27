@@ -2,15 +2,17 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
 import type {Application} from "@/models/application";
+import  type {Page} from "@/models/page";
 import {useApiApplicationsUrl} from "@/composables/useApiEndpoint";
+
 
 const applications = ref<Array<Application>>([])
 
 onMounted(() => {
   fetch(useApiApplicationsUrl())
     .then(response => response.json())
-    .then(data => {
-      applications.value = data
+    .then((data: Page<Application>) => {
+      applications.value = data.items
     })
 })
 </script>

@@ -11,6 +11,14 @@ export const useApiQualificationsUrl = () => {
     return `${apiEndpoint}/qualifications`
 }
 
+export const useApiVendorQualificationsUrl = () => {
+    return `${apiEndpoint}/qualifications/vendors`
+}
+
+export const useApiHealthcareProviderQualificationsUrl = () => {
+    return `${apiEndpoint}/qualifications/healthcare-providers`
+}
+
 export const useApiApplicationsUrl = () => {
     return `${apiEndpoint}/applications`
 }
@@ -46,4 +54,13 @@ export const useApiVendorsUrl = () => {
 export const useApiVendorUrl = (id?: string) => {
     const vendorUrl = useApiVendorsUrl()
     return `${vendorUrl}/${id}`
+}
+
+export const useHealthcareProvidersUrl = () => {
+        return `${apiEndpoint}/healthcare-providers`
+}
+
+export const useHealthcareProvider = (id?: string) => {
+    const healthcareProvidersUrl = useHealthcareProvidersUrl()
+    return `${healthcareProvidersUrl}/${id}`
 }
