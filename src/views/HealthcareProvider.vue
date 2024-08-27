@@ -10,7 +10,7 @@ const healthcareProvider = ref<HealthcareProvider|null>(null)
 onMounted(() => {
   fetch(useHealthcareProvider(route.params.id as string))
       .then(response => response.json())
-      .then(data => {
+      .then((data: HealthcareProvider) => {
         healthcareProvider.value = data
       })
 })
