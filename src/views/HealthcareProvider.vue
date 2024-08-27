@@ -21,10 +21,6 @@ onMounted(() => {
       <h1>Zorgaanbieder: {{ healthcareProvider?.tradeName }}</h1>
       <br>
       <dl>
-        <div>
-          <dt>ID</dt>
-          <dd>{{ healthcareProvider?.id }}</dd>
-        </div>
   
         <div>
           <dt>Handelsnaam</dt>
@@ -36,7 +32,7 @@ onMounted(() => {
           <dd>{{ healthcareProvider?.statutoryName }}</dd>
         </div>
         <div>
-          <dt>Ura code</dt>
+          <dt>URA-code</dt>
           <dd>{{ healthcareProvider?.uraCode }}</dd>
         </div>
         <div>
