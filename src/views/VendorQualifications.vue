@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
-import type { VendorQualifications } from '@/models/vendorQualifications';
+import type { VendorQualification } from '@/models/vendorQualification';
 import type { Page } from '@/models/page';
 import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint';
 
-const vendorQualifications = ref<Array<VendorQualifications>>([])
+const vendorQualifications = ref<Array<VendorQualification>>([])
 
 onMounted(() => {
   fetch(useApiVendorQualificationsUrl())
     .then(response => response.json())
-    .then((data: Page<VendorQualifications>) => {
+    .then((data: Page<VendorQualification>) => {
       vendorQualifications.value = data.items
     })
 })
@@ -32,13 +32,13 @@ onMounted(() => {
           <th>protocol versie</th>
         </tr>
         <tr v-for="qualification in vendorQualifications">
-            <td><RouterLink :to="{ name: 'vendor', params: { id: qualification.vendorId } }">{{ qualification.vendorName }}</RouterLink></td>
-            <td>{{ qualification.applicationName }}</td>
-            <td>{{ qualification.version }}</td>
-            <td>{{ qualification.systemType }}</td>
-            <td>{{ qualification.role }}</td>
+            <td><RouterLink :to="{ name: 'vendor', params: { id: qualification.vendorId } }">{{ qualification.tradeName }}</RouterLink></td>
+            <td><RouterLink :to="{name: 'application', params: { id: qualification.applicationId }}">{{ qualification.application }}</RouterLink></td>
+            <td>{{ qualification.applicationVersion }}</td>
+            <td><RouterLink :to="{ name: 'system-type', params: { id: qualification.systemTypeId } }">{{ qualification.systemType }}</RouterLink></td>
+            <td><RouterLink :to="{ name: 'role', params: { id: qualification.roleId } }">{{ qualification.role }}</RouterLink></td>
             <td>{{ qualification.qualificationDate }}</td>
-            <td>{{ qualification.protocolName }}</td>
+            <td>{{ qualification.protocol }}</td>
             <td>{{ qualification.protocolVersion }}</td>
         </tr>
       </table>
