@@ -26,8 +26,6 @@ onMounted(() => {
           <th>Protocol</th>
           <th>Protocol Type</th>
           <th>Protocol Versie</th>
-          <th>Applicatie</th>
-          <th>Applicatie Versie</th>
           <th>Kwalificatie datum</th>
         </tr>
         <tr v-for="qualification in healthcareProviderQualifications">
@@ -35,8 +33,6 @@ onMounted(() => {
           <td>{{ qualification.protocol }}</td>
           <td>{{ qualification.protocolType  }}</td>
           <td>{{ qualification.protocolVersion }}</td>
-          <td><RouterLink :to="{ name: 'application', params: { id: qualification.applicationId } }" >{{ qualification.application }}</RouterLink></td>
-          <td>{{ qualification.applicationVersion  }}</td>
           <td>{{ qualification.qualificationDate  }}</td>
         </tr>
       </table>
