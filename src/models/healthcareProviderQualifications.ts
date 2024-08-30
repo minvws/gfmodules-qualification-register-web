@@ -1,9 +1,11 @@
 export interface HealthcareProviderQualifications {
-    providerId: string,
-    providerName: string,
-    protocol: string,
-    protocolVersion: string,
-    applicationName: string,
-    applicationVersion: string,
-    qualificationDate: string,
+   qualificationId: string,
+   healthcareProviderId: string,
+   protocolId: string,
+   protocolVersionId: string,
+   healthcareProvider: string,
+   protocol: string,
+   protocolType: string,
+   protocolVersion: string,
+   qualificationDate: string
 }
