@@ -2,18 +2,25 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
 import type { VendorQualification } from '@/models/vendorQualification';
-import type { Page } from '@/models/page';
+import { type Pagination as IPagination, type Page, paginationService } from '@/models/page';
 import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint';
+import Pagination from '@/components/Pagination.vue';
 
-const vendorQualifications = ref<Array<VendorQualification>>([])
-
+const pageData = ref<IPagination<VendorQualification>>()
 onMounted(() => {
   fetch(useApiVendorQualificationsUrl())
     .then(response => response.json())
     .then((data: Page<VendorQualification>) => {
-      vendorQualifications.value = data.items
+      const totalPages = paginationService.totalPages(data.limit, data.total);
+      const pageNumber = paginationService.pageNumber(data.limit, data.offset)
+      pageData.value = {
+          ...data,
+          totalPages: totalPages,
+          pageNumber: pageNumber,
+        }
     })
 })
+
 </script>
 
 <template>
@@ -31,7 +38,7 @@ onMounted(() => {
           <th>protocol</th>
           <th>protocol versie</th>
         </tr>
-        <tr v-for="qualification in vendorQualifications">
+        <tr v-for="qualification in pageData?.items">
             <td><RouterLink :to="{ name: 'vendor', params: { id: qualification.vendorId } }">{{ qualification.tradeName }}</RouterLink></td>
             <td><RouterLink :to="{name: 'application', params: { id: qualification.applicationId }}">{{ qualification.application }}</RouterLink></td>
             <td>{{ qualification.applicationVersion }}</td>
@@ -42,6 +49,9 @@ onMounted(() => {
             <td>{{ qualification.protocolVersion }}</td>
         </tr>
       </table>
+      <div>
+        <Pagination :limit="pageData?.limit" :offset="pageData?.offset" :total-pages="pageData?.totalPages" :page-number="pageData?.pageNumber" />
+      </div>
     </div>
   </template>
   

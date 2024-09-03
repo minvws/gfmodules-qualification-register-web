@@ -12,7 +12,7 @@ export const useApiQualificationsUrl = () => {
 }
 
 export const useApiVendorQualificationsUrl = () => {
-    return `${apiEndpoint}/qualifications/vendors`
+    return `${apiEndpoint}/qualifications/vendors?limit=2&offset=0`
 }
 
 export const useApiHealthcareProviderQualificationsUrl = () => {

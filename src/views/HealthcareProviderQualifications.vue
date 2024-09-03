@@ -2,18 +2,35 @@
 import {onMounted, ref} from 'vue'
 import {RouterLink} from "vue-router";
 import type { HealthcareProviderQualifications } from '@/models/healthcareProviderQualifications';
-import type {Page} from "@/models/page"
+import {type Pagination as IPagination, paginationService, type Page} from "@/models/page"
 import {useApiHealthcareProviderQualificationsUrl} from "@/composables/useApiEndpoint";
+import Pagination  from '@/components/Pagination.vue';
 
 const healthcareProviderQualifications = ref<Array<HealthcareProviderQualifications>>([])
-
+const pageData = ref<IPagination | null>()
 onMounted(() => {
   fetch(useApiHealthcareProviderQualificationsUrl())
     .then(response => response.json())
     .then((data: Page<HealthcareProviderQualifications>) => {
-        healthcareProviderQualifications.value = data.items
+        healthcareProviderQualifications.value = data.items;
+        
+        const totalPages = paginationService.totalPages(data.limit, data.offset);
+        const pageNumber = paginationService.pageNumber(data.limit, data.offset)
+        const hasPrevousPage = paginationService.hasPreviousPage(pageNumber);
+        const hasNextPage = paginationService.hasNextPage(pageNumber, totalPages);
+  
+        pageData.value = {
+          ...data,
+          totalPages: totalPages,
+          pageNumber: pageNumber,
+          hasNextPage: hasNextPage,
+          hasPrevousPage: hasPrevousPage
+        }
+    }).then(() => {
+      console.log(pageData.value)
     })
 })
+
 </script>
 
 <template>
@@ -36,6 +53,9 @@ onMounted(() => {
           <td>{{ qualification.qualificationDate  }}</td>
         </tr>
       </table>
+      <div>
+        <Pagination />
+      </div>
     </div>
   </template>
   
