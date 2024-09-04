@@ -11,8 +11,8 @@ export const useApiQualificationsUrl = () => {
     return `${apiEndpoint}/qualifications`
 }
 
-export const useApiVendorQualificationsUrl = () => {
-    return `${apiEndpoint}/qualifications/vendors?limit=2&offset=0`
+export const useApiVendorQualificationsUrl = (limit: number, offset: number) => {
+    return `${apiEndpoint}/qualifications/vendors?limit=${limit}&offset=${offset}`
 }
 
 export const useApiHealthcareProviderQualificationsUrl = () => {

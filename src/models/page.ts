@@ -8,12 +8,14 @@ export interface Page <T> {
 
 export interface Pagination<T> extends Page<T> {
     totalPages: number,
-    pageNumber: number
+    pageNumber: number,
+    hasPreviousPage: boolean,
+    hasNextPage: boolean,
 }
 
 
 function totalPages(limit: number, total: number): number {
-    return Math.ceil(total / limit) + 1
+    return Math.ceil(total / limit)
 }
 
 function hasPreviousPage(pageNumber: number): boolean {

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { paginationService } from '@/models/page';
-
 interface Props {
     limit?: number,
     offset?: number,
     totalPages?: number,
     pageNumber?: number,
+    hasPreviousPage?: boolean,
+    hasNextPage?: boolean,
 }
 const props = defineProps<Props>()
 
@@ -14,19 +13,30 @@ const highlightButton = (index: number) => {
     if (index === props.pageNumber) return "is-current";
 }
 
+const emit = defineEmits(['nextPage', 'previousPage']);
+
+const nextPageHandler = () => {
+    emit("nextPage")
+}
+
+const previousPageHandler = () => {
+    emit("previousPage");
+}
+
+
 </script>
 
 <template>
     <div class="container">
         <ul class="ul">
             <li>
-                <button type="button"><<</button>
+                <button type="button" @click="previousPageHandler" :disabled="!hasPreviousPage"><<</button>
             </li>
             <li v-for="i in totalPages" :key="i">
                 <button :class="highlightButton(i)">{{ i }}</button>
             </li>
             <li>
-                <button type="button">>></button>
+                <button @click="nextPageHandler" type="button" :disabled="!hasNextPage">>></button>
             </li>
         </ul>
     </div>
@@ -37,7 +47,7 @@ const highlightButton = (index: number) => {
     
     margin-top: 16px;
 }
-.ul{
+.ul {
     display: flex;
     flex-direction: row;
     justify-content: center;
