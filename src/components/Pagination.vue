@@ -44,7 +44,6 @@ const previousPageHandler = () => {
 
 <style>
 .container {
-    
     margin-top: 16px;
 }
 .ul {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUpdate, onMounted, onUnmounted, onUpdated, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { RouterLink } from "vue-router";
 import type { VendorQualification } from '@/models/vendorQualification';
 import { type Pagination as IPagination, type Page, paginationService } from '@/models/page';
@@ -7,7 +7,7 @@ import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint';
 import Pagination from '@/components/Pagination.vue';
 
 const pageData = ref<IPagination<VendorQualification>>()
-const limit = ref<number>(2);
+const limit = ref<number>(10);
 const offset = ref<number>(0);
 onMounted(() => fetchVendorQualification(limit.value, offset.value));
 
@@ -16,13 +16,15 @@ const fetchVendorQualification = (limit: number, offset: number) => {
     .then(response => response.json())
     .then((data: Page<VendorQualification>) => {
       const totalPages = paginationService.totalPages(data.limit, data.total);
-      const pageNumber = paginationService.pageNumber(limit, offset)
+      const pageNumber = paginationService.pageNumber(limit, offset);
+      const hasPrevousPage = paginationService.hasPreviousPage(pageNumber);
+      const hasNextPage = paginationService.hasNextPage(pageNumber, totalPages);
       pageData.value = {
         ...data,
         totalPages: totalPages,
         pageNumber: pageNumber,
-        hasPreviousPage: paginationService.hasPreviousPage(pageNumber),
-        hasNextPage: paginationService.hasNextPage(pageNumber, totalPages)
+        hasPreviousPage: hasPrevousPage,
+        hasNextPage: hasNextPage
       }
     })
 }
@@ -37,8 +39,6 @@ const previousPage = () => {
   offset.value = offset.value - limit.value;
   fetchVendorQualification(limit.value, offset.value);
 }
-
-
 </script>
 
 <template>

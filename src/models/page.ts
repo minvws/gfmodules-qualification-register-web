@@ -15,7 +15,8 @@ export interface Pagination<T> extends Page<T> {
 
 
 function totalPages(limit: number, total: number): number {
-    return Math.ceil(total / limit)
+    const results = Math.ceil(total / limit)
+    return results > 0 ? results : 1;
 }
 
 function hasPreviousPage(pageNumber: number): boolean {
@@ -27,7 +28,9 @@ function hasNextPage(pageNumber: number, totalPages: number): boolean {
 }
 
 function pageNumber(limit: number, offset: number): number {
-    return (offset / limit) + 1
+    const test = (offset / limit) + 1;
+    console.log(test)
+    return test
 }
 
 export const paginationService = {
