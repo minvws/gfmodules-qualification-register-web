@@ -27,15 +27,15 @@ const handlePageSelection = (selectedPage: number) => {
     emit("selectPage", selectedPage)
 }
 
-const isCurrent = (selectedPage: number) => selectedPage === 1 ? true : undefined;
+const isCurrent = (selectedPage: number) => selectedPage === props.pageNumber ? true : undefined;
 const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
 
 </script>
 
 <template>
     <nav class="pagination" aria-label="Paginering">
-        <a href="#" class="adjacent previous" @click="handePreviousPage"
-            :disabled="!props.hasPreviousPage">Vorige</a>
+        <button href="#" class="adjacent previous" @click="handePreviousPage"
+            :disabled="!props.hasPreviousPage">Vorige</button>
         <ul>
             <li v-for="(n, i) in totalPages" :key="i">
                 <a href="#"
@@ -44,7 +44,7 @@ const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
                 :aria-label=label(n) >{{ n }}</a>
             </li>
         </ul>
-        <a href="#" @click="handleNextPage" aria-label="Ga naar de volgende pagina" class="adjacent next"
-            :disabled="!props.hasNextPage">Volgende</a>
+        <button href="#" @click="handleNextPage" aria-label="Ga naar de volgende pagina" class="adjacent next"
+            :disabled="!props.hasNextPage">Volgende</button>
     </nav>
 </template>
