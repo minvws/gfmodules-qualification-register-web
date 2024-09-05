@@ -5,7 +5,6 @@ export interface Page <T> {
     total: number,
 }
 
-
 export interface Pagination<T> extends Page<T> {
     totalPages: number,
     pageNumber: number,
