@@ -44,7 +44,7 @@ const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
                 :aria-label=label(n) >{{ n }}</a>
             </li>
         </ul>
-        <button href="#" @click="handleNextPage" aria-label="Ga naar de volgende pagina" class="adjacent next"
+        <button @click="handleNextPage" aria-label="Ga naar de volgende pagina" class="adjacent next"
             :disabled="!props.hasNextPage">Volgende</button>
     </nav>
 </template>
