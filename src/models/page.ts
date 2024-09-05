@@ -13,7 +13,6 @@ export interface Pagination<T> extends Page<T> {
     hasNextPage: boolean,
 }
 
-
 function totalPages(limit: number, total: number): number {
     const results = Math.ceil(total / limit);
     return results > 0 ? results : 1;
