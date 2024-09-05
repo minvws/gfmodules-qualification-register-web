@@ -7,7 +7,7 @@ import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint';
 import Pagination from '@/components/Pagination.vue';
 
 const pageData = ref<IPagination<VendorQualification>>()
-const limit = ref<number>(2);
+const limit = ref<number>(10);
 const offset = ref<number>(0);
 onMounted(() => fetchVendorQualification(limit.value, offset.value));
 
