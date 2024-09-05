@@ -34,7 +34,7 @@ const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
 
 <template>
     <nav class="pagination" aria-label="Paginering">
-        <button href="#" class="adjacent previous" @click="handePreviousPage"
+        <button class="adjacent previous" @click="handePreviousPage"
             :disabled="!props.hasPreviousPage">Vorige</button>
         <ul>
             <li v-for="(n, i) in totalPages" :key="i">
