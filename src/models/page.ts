@@ -15,12 +15,12 @@ export interface Pagination<T> extends Page<T> {
 
 
 function totalPages(limit: number, total: number): number {
-    const results = Math.ceil(total / limit)
+    const results = Math.ceil(total / limit);
     return results > 0 ? results : 1;
 }
 
 function hasPreviousPage(pageNumber: number): boolean {
-    return pageNumber > 1
+    return pageNumber > 1;
 }
 
 function hasNextPage(pageNumber: number, totalPages: number): boolean {
@@ -28,14 +28,12 @@ function hasNextPage(pageNumber: number, totalPages: number): boolean {
 }
 
 function pageNumber(limit: number, offset: number): number {
-    const test = (offset / limit) + 1;
-    console.log(test)
-    return test
+    return (offset / limit) + 1;
 }
 
 export const paginationService = {
     totalPages: totalPages,
     hasPreviousPage: hasPreviousPage,
     hasNextPage: hasNextPage,
-    pageNumber: pageNumber
+    pageNumber: pageNumber,
 }

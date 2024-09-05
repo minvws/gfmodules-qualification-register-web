@@ -7,7 +7,7 @@ import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint';
 import Pagination from '@/components/Pagination.vue';
 
 const pageData = ref<IPagination<VendorQualification>>()
-const limit = ref<number>(10);
+const limit = ref<number>(2);
 const offset = ref<number>(0);
 onMounted(() => fetchVendorQualification(limit.value, offset.value));
 
@@ -39,6 +39,13 @@ const previousPage = () => {
   offset.value = offset.value - limit.value;
   fetchVendorQualification(limit.value, offset.value);
 }
+
+const selectPage = (selectedPage: number) => {
+  console.log(selectedPage)
+  offset.value = selectedPage * limit.value;
+  fetchVendorQualification(limit.value, offset.value);
+}
+
 </script>
 
 <template>
@@ -80,7 +87,8 @@ const previousPage = () => {
     </table>
     <div>
       <Pagination :limit="pageData?.limit" :offset="pageData?.offset" :total-pages="pageData?.totalPages"
-        :page-number="pageData?.pageNumber" @previous-page="previousPage" @next-page="nextPage" :has-previous-page="pageData?.hasPreviousPage" :has-next-page="pageData?.hasNextPage"/>
+        :page-number="pageData?.pageNumber" @previous-page="previousPage" @next-page="nextPage"
+         v-on:select-page="selectPage" :has-previous-page="pageData?.hasPreviousPage" :has-next-page="pageData?.hasNextPage" />
     </div>
   </div>
 </template>

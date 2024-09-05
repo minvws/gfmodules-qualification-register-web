@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed, onBeforeUpdate, onMounted, ref } from 'vue';
+
 interface Props {
     limit?: number,
     offset?: number,
@@ -8,52 +10,41 @@ interface Props {
     hasNextPage?: boolean,
 }
 const props = defineProps<Props>()
+const emit = defineEmits(['nextPage', 'previousPage', 'selectPage']);
+const currentPage = ref<number | undefined>(props.pageNumber);
+onMounted(() => currentPage.value = props.pageNumber);
+onBeforeUpdate(() => console.log(currentPage.value));
 
-const highlightButton = (index: number) => {
-    if (index === props.pageNumber) return "is-current";
+const handleNextPage = () => {
+    emit("nextPage");
 }
 
-const emit = defineEmits(['nextPage', 'previousPage']);
-
-const nextPageHandler = () => {
-    emit("nextPage")
-}
-
-const previousPageHandler = () => {
+const handePreviousPage = () => {
     emit("previousPage");
 }
 
+const handlePageSelection = (selectedPage: number) => {
+    emit("selectPage", selectedPage)
+}
+
+const isCurrent = (selectedPage: number) => selectedPage === 1 ? true : undefined;
+const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
 
 </script>
 
 <template>
-    <div class="container">
-        <ul class="ul">
-            <li>
-                <button type="button" @click="previousPageHandler" :disabled="!hasPreviousPage"><<</button>
-            </li>
-            <li v-for="i in totalPages" :key="i">
-                <button :class="highlightButton(i)">{{ i }}</button>
-            </li>
-            <li>
-                <button @click="nextPageHandler" type="button" :disabled="!hasNextPage">>></button>
+    <nav class="pagination" aria-label="Paginering">
+        <a href="#" class="adjacent previous" @click="handePreviousPage"
+            :disabled="!props.hasPreviousPage">Vorige</a>
+        <ul>
+            <li v-for="(n, i) in totalPages" :key="i">
+                <a href="#"
+                @click="handlePageSelection(i)" 
+                :aria-current="isCurrent(n)"
+                :aria-label=label(n) >{{ n }}</a>
             </li>
         </ul>
-    </div>
+        <a href="#" @click="handleNextPage" aria-label="Ga naar de volgende pagina" class="adjacent next"
+            :disabled="!props.hasNextPage">Volgende</a>
+    </nav>
 </template>
-
-<style>
-.container {
-    margin-top: 16px;
-}
-.ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    list-style-type: none;
-}
-.is-current {
-    background-color: red;
-}
-</style>
