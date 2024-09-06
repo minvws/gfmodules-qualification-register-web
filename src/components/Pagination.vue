@@ -1,41 +1,51 @@
 <script setup lang="ts">
-import { computed, onBeforeUpdate, onMounted, ref } from 'vue';
+import{ paginationService } from '@/models/page';
+import { computed, ref, type Ref } from 'vue';
 
 interface Props {
-    limit?: number,
-    offset?: number,
-    totalPages?: number,
-    pageNumber?: number,
-    hasPreviousPage?: boolean,
-    hasNextPage?: boolean,
+    limit: number,
+    offset: number,
+    totalItems: number,
 }
-const props = defineProps<Props>()
-const emit = defineEmits(['nextPage', 'previousPage', 'selectPage']);
-const currentPage = ref<number | undefined>(props.pageNumber);
-onMounted(() => currentPage.value = props.pageNumber);
-onBeforeUpdate(() => console.log(currentPage.value));
+const props = defineProps<Props>();
+const offset = ref<number>(props.offset);
+const limit = ref<number>(props.limit)
+const totalPages = computed<number>(() => (paginationService.totalPages(props.limit, props.totalItems)));
+const pageNumber = ref<number>(paginationService.pageNumber(props.limit, props.offset));
+const hasPrevousPage = computed<boolean>(() => (paginationService.hasPreviousPage(pageNumber.value)));
+const hasNextPage = computed<boolean>(() => (paginationService.hasNextPage(pageNumber.value, totalPages.value)));
+
+const emit = defineEmits(['updateData']);
+
+const updatePagination  = (limit: Ref<number>, offset: Ref<number>): void => {
+    pageNumber.value = paginationService.pageNumber(limit.value, offset.value);
+    emit("updateData", limit.value, offset.value);
+}
 
 const handleNextPage = () => {
-    emit("nextPage");
+    offset.value = offset.value + limit.value;
+    updatePagination(limit, offset)
 }
 
 const handePreviousPage = () => {
-    emit("previousPage");
+    offset.value = offset.value - limit.value;
+    updatePagination(limit, offset)
 }
 
 const handlePageSelection = (selectedPage: number) => {
-    emit("selectPage", selectedPage)
+    offset.value = selectedPage * limit.value;
+    updatePagination(limit, offset)
 }
 
-const isCurrent = (selectedPage: number) => selectedPage === props.pageNumber ? true : undefined;
-const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
+const isCurrent = (selectedPage: number) => selectedPage === pageNumber.value ? true : undefined;
+const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string;
 
 </script>
 
 <template>
     <nav class="pagination" aria-label="Paginering">
         <button class="adjacent previous" @click="handePreviousPage"
-            :disabled="!props.hasPreviousPage">Vorige</button>
+            :disabled="!hasPrevousPage">Vorige</button>
         <ul>
             <li v-for="(n, i) in totalPages" :key="i">
                 <a href="#"
@@ -45,6 +55,6 @@ const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
             </li>
         </ul>
         <button @click="handleNextPage" aria-label="Ga naar de volgende pagina" class="adjacent next"
-            :disabled="!props.hasNextPage">Volgende</button>
+            :disabled="!hasNextPage">Volgende</button>
     </nav>
 </template>

@@ -2,12 +2,12 @@
 import { onMounted, ref } from 'vue'
 import { RouterLink } from "vue-router";
 import type { HealthcareProviderQualifications } from '@/models/healthcareProviderQualifications';
-import { type Pagination as IPagination, paginationService, type Page } from "@/models/page"
+import { type Page } from "@/models/page"
 import { useApiHealthcareProviderQualificationsUrl } from "@/composables/useApiEndpoint";
 import Pagination from '@/components/Pagination.vue';
 
 
-const pageData = ref<IPagination<HealthcareProviderQualifications>>()
+const qualifications = ref<Page<HealthcareProviderQualifications>>()
 const limit = ref<number>(10);
 const offset = ref<number>(0);
 onMounted(() => fetchHealthcareProviderQualifications(limit.value, offset.value));
@@ -16,30 +16,11 @@ const fetchHealthcareProviderQualifications = (limit: number, offset: number) =>
   fetch(useApiHealthcareProviderQualificationsUrl(limit, offset))
     .then(response => response.json())
     .then((data: Page<HealthcareProviderQualifications>) => {
-      const totalPages = paginationService.totalPages(data.limit, data.offset);
-      const pageNumber = paginationService.pageNumber(data.limit, data.offset)
-      const hasPrevousPage = paginationService.hasPreviousPage(pageNumber);
-      const hasNextPage = paginationService.hasNextPage(pageNumber, totalPages);
-      pageData.value = {
+    
+      qualifications.value = {
         ...data,
-        totalPages: totalPages,
-        pageNumber: pageNumber,
-        hasPreviousPage: hasPrevousPage,
-        hasNextPage: hasNextPage
       }
-    })
-}
-
-const nextPage = () => {
-  offset.value = offset.value + limit.value;
-  fetchHealthcareProviderQualifications(limit.value, offset.value)
-
-}
-
-const previousPage = () => {
-  offset.value = offset.value - limit.value;
-  fetchHealthcareProviderQualifications(limit.value, offset.value);
-}
+    })}
 </script>
 
 <template>
@@ -54,7 +35,7 @@ const previousPage = () => {
         <th>Protocol Versie</th>
         <th>Kwalificatie datum</th>
       </tr>
-      <tr v-for="qualification in pageData?.items">
+      <tr v-for="qualification in qualifications?.items">
         <td>
           <RouterLink :to="{ name: 'healthcare-provider', params: { id: qualification.healthcareProviderId } }">{{
             qualification.healthcareProvider }}</RouterLink>
@@ -66,8 +47,7 @@ const previousPage = () => {
       </tr>
     </table>
     <div>
-      <Pagination :limit="pageData?.limit" :offset="pageData?.offset" :total-pages="pageData?.totalPages"
-        :page-number="pageData?.pageNumber" @previous-page="previousPage" @next-page="nextPage" :has-previous-page="pageData?.hasPreviousPage" :has-next-page="pageData?.hasNextPage"/>
+      <Pagination v-if="qualifications" :limit="limit" :offset="offset"  :total-items="qualifications?.total" @update-data="fetchHealthcareProviderQualifications" />
     </div>
   </div>
 </template>

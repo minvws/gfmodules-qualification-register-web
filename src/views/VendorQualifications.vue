@@ -2,11 +2,11 @@
 import { onMounted, ref } from 'vue'
 import { RouterLink } from "vue-router";
 import type { VendorQualification } from '@/models/vendorQualification';
-import { type Pagination as IPagination, type Page, paginationService } from '@/models/page';
+import { type Page } from '@/models/page';
 import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint';
 import Pagination from '@/components/Pagination.vue';
 
-const pageData = ref<IPagination<VendorQualification>>()
+const qualifications = ref<Page<VendorQualification>>()
 const limit = ref<number>(10);
 const offset = ref<number>(0);
 onMounted(() => fetchVendorQualification(limit.value, offset.value));
@@ -15,37 +15,11 @@ const fetchVendorQualification = (limit: number, offset: number) => {
   fetch(useApiVendorQualificationsUrl(limit, offset))
     .then(response => response.json())
     .then((data: Page<VendorQualification>) => {
-      const totalPages = paginationService.totalPages(data.limit, data.total);
-      const pageNumber = paginationService.pageNumber(limit, offset);
-      const hasPrevousPage = paginationService.hasPreviousPage(pageNumber);
-      const hasNextPage = paginationService.hasNextPage(pageNumber, totalPages);
-      pageData.value = {
+      qualifications.value = {
         ...data,
-        totalPages: totalPages,
-        pageNumber: pageNumber,
-        hasPreviousPage: hasPrevousPage,
-        hasNextPage: hasNextPage
       }
     })
 }
-
-const nextPage = () => {
-  offset.value = offset.value + limit.value;
-  fetchVendorQualification(limit.value, offset.value)
-
-}
-
-const previousPage = () => {
-  offset.value = offset.value - limit.value;
-  fetchVendorQualification(limit.value, offset.value);
-}
-
-const selectPage = (selectedPage: number) => {
-  console.log(selectedPage)
-  offset.value = selectedPage * limit.value;
-  fetchVendorQualification(limit.value, offset.value);
-}
-
 </script>
 
 <template>
@@ -63,7 +37,7 @@ const selectPage = (selectedPage: number) => {
         <th>protocol</th>
         <th>protocol versie</th>
       </tr>
-      <tr v-for="qualification in pageData?.items" :key="qualification.qualificationId">
+      <tr v-for="qualification in qualifications?.items" :key="qualification.qualificationId">
         <td>
           <RouterLink :to="{ name: 'vendor', params: { id: qualification.vendorId } }">{{ qualification.tradeName }}
           </RouterLink>
@@ -86,9 +60,7 @@ const selectPage = (selectedPage: number) => {
       </tr>
     </table>
     <div>
-      <Pagination :limit="pageData?.limit" :offset="pageData?.offset" :total-pages="pageData?.totalPages"
-        :page-number="pageData?.pageNumber" @previous-page="previousPage" @next-page="nextPage"
-         v-on:select-page="selectPage" :has-previous-page="pageData?.hasPreviousPage" :has-next-page="pageData?.hasNextPage" />
+      <Pagination v-if="qualifications" :limit="limit" :offset="offset"  :total-items="qualifications?.total" @update-data="fetchVendorQualification" />
     </div>
   </div>
 </template>
