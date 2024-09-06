@@ -11,12 +11,12 @@ export const useApiQualificationsUrl = () => {
     return `${apiEndpoint}/qualifications`
 }
 
-export const useApiVendorQualificationsUrl = () => {
-    return `${apiEndpoint}/qualifications/vendors`
+export const useApiVendorQualificationsUrl = (limit: number, offset: number) => {
+    return `${apiEndpoint}/qualifications/vendors?limit=${limit}&offset=${offset}`
 }
 
-export const useApiHealthcareProviderQualificationsUrl = () => {
-    return `${apiEndpoint}/qualifications/healthcare-providers`
+export const useApiHealthcareProviderQualificationsUrl = (limit: number, offset: number) => {
+    return `${apiEndpoint}/qualifications/healthcare-providers?limit=${limit}&offset=${offset}`
 }
 
 export const useApiApplicationsUrl = () => {
