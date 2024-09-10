@@ -1,0 +1,17 @@
+services:
+  app:
+    image: node:22.8
+    ports:
+      - "8508:9004"
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: bash -c "npm install && npm run dev"
+    user: "${UID}:${GID}"
+    networks:
+      - zmodules
+
+networks:
+  zmodules:
+    driver: bridge
+    name: zmodules
