@@ -1,26 +1,36 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { RouterLink } from "vue-router";
-import type { HealthcareProviderQualifications } from '@/models/healthcareProviderQualifications';
-import { type Page } from "@/models/page"
-import { useApiHealthcareProviderQualificationsUrl } from "@/composables/useApiEndpoint";
-import Pagination from '@/components/Pagination.vue';
+import { computed, ref, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+import type { HealthcareProviderQualifications } from '@/models/healthcareProviderQualifications'
+import { type Page } from '@/models/page'
+import { useApiHealthcareProviderQualificationsUrl } from '@/composables/useApiEndpoint'
+import Pagination from '@/components/Pagination.vue'
+import { parsePaginationPage } from '@/utils/pagination'
 
-
+const route = useRoute()
 const qualifications = ref<Page<HealthcareProviderQualifications>>()
-const limit = ref<number>(10);
-const offset = ref<number>(0);
-onMounted(() => fetchHealthcareProviderQualifications(limit.value, offset.value));
 
-const fetchHealthcareProviderQualifications = (limit: number, offset: number) => {
-  fetch(useApiHealthcareProviderQualificationsUrl(limit, offset))
+const limit = ref<number>(10)
+const page = computed<number>(() => {
+  return parsePaginationPage(route.query.page) ?? 1
+})
+const offset = computed<number>(() => {
+  return Math.max(page.value - 1, 0) * limit.value
+})
+
+const fetchHealthcareProviderQualifications = (offset: number) => {
+  fetch(useApiHealthcareProviderQualificationsUrl(limit.value, offset))
     .then(response => response.json())
     .then((data: Page<HealthcareProviderQualifications>) => {
-    
       qualifications.value = {
         ...data,
       }
-    })}
+    })
+}
+
+watch(offset, async (newOffset) => {
+  fetchHealthcareProviderQualifications(newOffset)
+}, { immediate: true })
 </script>
 
 <template>
@@ -47,7 +57,7 @@ const fetchHealthcareProviderQualifications = (limit: number, offset: number) =>
       </tr>
     </table>
     <div>
-      <Pagination v-if="qualifications" :limit="limit" :offset="offset"  :total-items="qualifications?.total" @update-data="fetchHealthcareProviderQualifications" />
+      <Pagination v-if="qualifications" :limit="limit" :offset="offset"  :total-items="qualifications?.total" />
     </div>
   </div>
 </template>
