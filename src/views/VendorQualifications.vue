@@ -1,18 +1,27 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { RouterLink } from "vue-router";
+import {computed, onMounted, ref, watch} from 'vue'
+import {RouterLink, useRoute} from "vue-router";
 import type { VendorQualification } from '@/models/vendorQualification';
 import { type Page } from '@/models/page';
 import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint';
 import Pagination from '@/components/Pagination.vue';
+import type {HealthcareProviderQualifications} from "@/models/healthcareProviderQualifications";
+import {parsePaginationPage} from "@/utils/pagination";
 
+
+const route = useRoute()
 const qualifications = ref<Page<VendorQualification>>()
-const limit = ref<number>(10);
-const offset = ref<number>(0);
-onMounted(() => fetchVendorQualification(limit.value, offset.value));
 
-const fetchVendorQualification = (limit: number, offset: number) => {
-  fetch(useApiVendorQualificationsUrl(limit, offset))
+const limit = ref<number>(10)
+const page = computed<number>(() => {
+  return parsePaginationPage(route.query.page) ?? 1
+})
+const offset = computed<number>(() => {
+  return Math.max(page.value - 1, 0) * limit.value
+})
+
+const fetchVendorQualification = (offset: number) => {
+  fetch(useApiVendorQualificationsUrl(limit.value, offset))
     .then(response => response.json())
     .then((data: Page<VendorQualification>) => {
       qualifications.value = {
@@ -20,6 +29,10 @@ const fetchVendorQualification = (limit: number, offset: number) => {
       }
     })
 }
+
+watch(offset, async (newOffset) => {
+  fetchVendorQualification(newOffset)
+}, { immediate: true })
 </script>
 
 <template>
