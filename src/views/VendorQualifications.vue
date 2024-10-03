@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, watch} from 'vue'
-import {RouterLink, useRoute} from "vue-router";
-import type { VendorQualification } from '@/models/vendorQualification';
-import { type Page } from '@/models/page';
-import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint';
-import Pagination from '@/components/Pagination.vue';
-import type {HealthcareProviderQualifications} from "@/models/healthcareProviderQualifications";
-import {parsePaginationPage} from "@/utils/pagination";
+import { computed, ref, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+import type { VendorQualification } from '@/models/vendorQualification'
+import { type Page } from '@/models/page'
+import { useApiVendorQualificationsUrl } from '@/composables/useApiEndpoint'
+import Pagination from '@/components/Pagination.vue'
+import { parsePaginationPage } from '@/utils/pagination'
 
 
 const route = useRoute()
@@ -73,7 +72,7 @@ watch(offset, async (newOffset) => {
       </tr>
     </table>
     <div>
-      <Pagination v-if="qualifications" :limit="limit" :offset="offset"  :total-items="qualifications?.total" @update-data="fetchVendorQualification" />
+      <Pagination v-if="qualifications" :limit="limit" :offset="offset" :total-items="qualifications?.total" />
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {paginationService} from '@/models/page';
-import {computed, ref, type Ref} from 'vue';
-import {useRoute} from 'vue-router';
+import { paginationService } from '@/models/page'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 interface Props {
   limit: number,
@@ -9,15 +9,15 @@ interface Props {
   totalItems: number,
 }
 
-const props = defineProps<Props>();
-const totalPages = computed<number>(() => paginationService.totalPages(props.limit, props.totalItems));
-const pageNumber = computed<number>(() => paginationService.pageNumber(props.limit, props.offset));
+const props = defineProps<Props>()
+const totalPages = computed<number>(() => paginationService.totalPages(props.limit, props.totalItems))
+const pageNumber = computed<number>(() => paginationService.pageNumber(props.limit, props.offset))
 
-const route = useRoute();
+const route = useRoute()
 
-const isCurrent = (selectedPage: number) => selectedPage === pageNumber.value ? true : undefined;
-const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string;
-const currentLabel = (pageNumber: number) => "Huidige pagina, pagina " + pageNumber as string;
+const isCurrent = (selectedPage: number) => selectedPage === pageNumber.value ? true : undefined
+const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
+const currentLabel = (pageNumber: number) => "Huidige pagina, pagina " + pageNumber as string
 
 const paginateRouteObject = (pageNumber: number) => {
   return {
@@ -25,7 +25,7 @@ const paginateRouteObject = (pageNumber: number) => {
       ...route.query,
       ['page']: pageNumber,
     },
-  };
+  }
 }
 
 const previousPageRouteObject = computed(() => {
@@ -33,13 +33,13 @@ const previousPageRouteObject = computed(() => {
     return undefined
   }
   return paginateRouteObject(pageNumber.value - 1)
-});
+})
 const nextPageRouteObject = computed(() => {
   if (!paginationService.hasNextPage(pageNumber.value, totalPages.value)) {
     return undefined
   }
   return paginateRouteObject(pageNumber.value + 1)
-});
+})
 
 </script>
 
