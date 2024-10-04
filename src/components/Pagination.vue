@@ -1,60 +1,76 @@
 <script setup lang="ts">
-import{ paginationService } from '@/models/page';
-import { computed, ref, type Ref } from 'vue';
+import { paginationService } from '@/models/page'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 interface Props {
-    limit: number,
-    offset: number,
-    totalItems: number,
-}
-const props = defineProps<Props>();
-const offset = ref<number>(props.offset);
-const limit = ref<number>(props.limit)
-const totalPages = computed<number>(() => (paginationService.totalPages(props.limit, props.totalItems)));
-const pageNumber = ref<number>(paginationService.pageNumber(props.limit, props.offset));
-const hasPrevousPage = computed<boolean>(() => (paginationService.hasPreviousPage(pageNumber.value)));
-const hasNextPage = computed<boolean>(() => (paginationService.hasNextPage(pageNumber.value, totalPages.value)));
-
-const emit = defineEmits(['updateData']);
-
-const updatePagination  = (limit: Ref<number>, offset: Ref<number>): void => {
-    pageNumber.value = paginationService.pageNumber(limit.value, offset.value);
-    emit("updateData", limit.value, offset.value);
+  limit: number,
+  offset: number,
+  totalItems: number,
 }
 
-const handleNextPage = () => {
-    offset.value = offset.value + limit.value;
-    updatePagination(limit, offset)
+const props = defineProps<Props>()
+const totalPages = computed<number>(() => paginationService.totalPages(props.limit, props.totalItems))
+const pageNumber = computed<number>(() => paginationService.pageNumber(props.limit, props.offset))
+
+const route = useRoute()
+
+const isCurrent = (selectedPage: number) => selectedPage === pageNumber.value ? true : undefined
+const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string
+const currentLabel = (pageNumber: number) => "Huidige pagina, pagina " + pageNumber as string
+
+const paginateRouteObject = (pageNumber: number) => {
+  return {
+    query: {
+      ...route.query,
+      ['page']: pageNumber,
+    },
+  }
 }
 
-const handePreviousPage = () => {
-    offset.value = offset.value - limit.value;
-    updatePagination(limit, offset)
-}
-
-const handlePageSelection = (selectedPage: number) => {
-    offset.value = selectedPage * limit.value;
-    updatePagination(limit, offset)
-}
-
-const isCurrent = (selectedPage: number) => selectedPage === pageNumber.value ? true : undefined;
-const label = (pageNumber: number) => "Ga naar pagina " + pageNumber as string;
+const previousPageRouteObject = computed(() => {
+  if (!paginationService.hasPreviousPage(pageNumber.value)) {
+    return undefined
+  }
+  return paginateRouteObject(pageNumber.value - 1)
+})
+const nextPageRouteObject = computed(() => {
+  if (!paginationService.hasNextPage(pageNumber.value, totalPages.value)) {
+    return undefined
+  }
+  return paginateRouteObject(pageNumber.value + 1)
+})
 
 </script>
 
 <template>
-    <nav class="pagination" aria-label="Paginering">
-        <button class="adjacent previous" @click="handePreviousPage"
-            :disabled="!hasPrevousPage">Vorige</button>
-        <ul>
-            <li v-for="(n, i) in totalPages" :key="i">
-                <a href="#"
-                @click="handlePageSelection(i)" 
-                :aria-current="isCurrent(n)"
-                :aria-label=label(n) >{{ n }}</a>
-            </li>
-        </ul>
-        <button @click="handleNextPage" aria-label="Ga naar de volgende pagina" class="adjacent next"
-            :disabled="!hasNextPage">Volgende</button>
-    </nav>
+  <nav class="pagination" aria-label="Paginering">
+    <RouterLink
+      v-if="previousPageRouteObject"
+      :to="previousPageRouteObject"
+      class="adjacent previous">Vorige
+    </RouterLink>
+    <span v-else aria-label="Ga naar de vorige pagina" class="disabled">Vorige</span>
+    <ul>
+      <li v-for="(n, i) in totalPages" :key="i">
+        <span
+          v-if="isCurrent(n)"
+          aria-current="true"
+          :aria-label="currentLabel(n)">{{ n }}</span>
+        <RouterLink
+          v-else
+          :to="paginateRouteObject(n)"
+          :aria-label="label(n)"
+          :aria-current="isCurrent(n)">{{ n }}
+        </RouterLink>
+      </li>
+    </ul>
+    <RouterLink
+      v-if="nextPageRouteObject"
+      :to="nextPageRouteObject"
+      aria-label="Ga naar de volgende pagina"
+      class="adjacent next">Volgende
+    </RouterLink>
+    <span v-else aria-label="Ga naar de volgende pagina" class="disabled">Volgende</span>
+  </nav>
 </template>
