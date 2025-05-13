@@ -18,11 +18,11 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.5",
-    "@types/node": "^22.15.12",
-    "@vitejs/plugin-vue": "^5.2.3",
+    "@types/node": "^22.15.17",
+    "@vitejs/plugin-vue": "^5.2.4",
     "@vue/tsconfig": "^0.7.0",
     "npm-run-all2": "^8.0.1",
-    "sass": "^1.87.0",
+    "sass": "^1.88.0",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
     "vue-tsc": "^2.2.10"
